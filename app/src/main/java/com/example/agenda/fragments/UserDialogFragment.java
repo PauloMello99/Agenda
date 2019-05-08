@@ -22,7 +22,7 @@ import butterknife.BindView;
 public class UserDialogFragment extends DialogFragment {
 
     public interface NoticeDialogListener {
-        void onDialogPositiveClick(User user, String position);
+        void onDialogPositiveClick(User user, int position);
     }
 
     public static String EDIT_TAG = "EDIT";
@@ -35,13 +35,13 @@ public class UserDialogFragment extends DialogFragment {
     private User currentUser = null;
 
     private EditText nameEditText;
-    private EditText yearEditText;
+    private EditText dateEditText;
 
     @BindView(R.id.input_layout_name)
     TextInputLayout nameInputLayout;
 
     @BindView(R.id.input_layout_year)
-    TextInputLayout yearInputLayout;
+    TextInputLayout dateInputLayout;
 
     @Override
     public void onAttach(Context context) {
@@ -79,8 +79,8 @@ public class UserDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 currentUser.setName(nameEditText.getText().toString().trim());
-                currentUser.setYear(yearEditText.getText().toString().trim());
-                if(checkFields()) dialogListener.onDialogPositiveClick(currentUser,bundle.getString(EXTRA_POSITION));
+                currentUser.setDate(dateEditText.getText().toString().trim());
+                if(checkFields()) dialogListener.onDialogPositiveClick(currentUser,bundle.getInt(EXTRA_POSITION));
                 else Toast.makeText(context, "Campos inválidos", Toast.LENGTH_LONG).show();
             }
         });
@@ -99,11 +99,11 @@ public class UserDialogFragment extends DialogFragment {
 
     private void setView(View view,Bundle bundle) {
         nameEditText = view.findViewById(R.id.name);
-        yearEditText = view.findViewById(R.id.year);
+        dateEditText = view.findViewById(R.id.year);
         if(getTag().equals(EDIT_TAG)){
             currentUser = (User) bundle.getSerializable(EXTRA_ITEM);
             nameEditText.setText(currentUser.getName());
-            yearEditText.setText(currentUser.getYear());
+            dateEditText.setText(currentUser.getDate());
         } else currentUser = new User();
     }
 
@@ -113,8 +113,8 @@ public class UserDialogFragment extends DialogFragment {
             nameInputLayout.setError("Insira o nome");
             check = false;
         }
-        if(currentUser.getYear().isEmpty()){
-            yearInputLayout.setError("Insira o ano");
+        if(currentUser.getDate().isEmpty()){
+            dateInputLayout.setError("Insira o ano");
             check = false;
         }
         return check;

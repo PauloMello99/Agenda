@@ -8,7 +8,7 @@ public interface SQLiteGenericDAO<T> {
     void update(T t) throws  Exception;
     void delete(T t) throws  Exception;
     T searchById(long id) throws  Exception;
-    T searchByName(String name) throws  Exception;
+    List<T> searchByName(String name) throws  Exception;
     List<T> searchAll() throws  Exception;
 
 }

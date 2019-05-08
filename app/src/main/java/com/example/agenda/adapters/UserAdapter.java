@@ -41,7 +41,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         User user = userList.get(i);
         viewHolder.nameTextView.setText(user.getName());
-        viewHolder.yearTextView.setText(user.getYear());
+        viewHolder.dateTextView.setText(user.getDate());
     }
 
     @Override
@@ -49,19 +49,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         return userList.size();
     }
 
-
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.card_name)
         TextView nameTextView;
 
         @BindView(R.id.card_year)
-        TextView yearTextView;
+        TextView dateTextView;
 
-        public ViewHolder(@NonNull View itemView) {
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
     }
-
 }

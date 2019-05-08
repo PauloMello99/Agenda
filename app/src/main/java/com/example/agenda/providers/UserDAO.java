@@ -1,6 +1,5 @@
 package com.example.agenda.providers;
 
-import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -20,17 +19,17 @@ public class UserDAO implements SQLiteGenericDAO<User> {
     }
 
     @Override
-    public long create(User user) throws Exception {
+    public long create(User user) {
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues contentValues = getContentValues(user);
-        long id = database.insert(UserSchema.TABLE_NAME,null,contentValues);
+        long id = database.insert(UserSchema.TABLE_NAME,null, contentValues);
         if(id != -1) user.setId(id);
         database.close();
         return id;
     }
 
     @Override
-    public void update(User user) throws Exception {
+    public void update(User user) {
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues contentValues = getContentValues(user);
         database.update(UserSchema.TABLE_NAME,contentValues,UserSchema.WHERE_ID_EQUAL,new String[]{String.valueOf(user.getId())});
@@ -38,14 +37,14 @@ public class UserDAO implements SQLiteGenericDAO<User> {
     }
 
     @Override
-    public void delete(User user) throws Exception {
+    public void delete(User user)  {
         SQLiteDatabase database = helper.getWritableDatabase();
         database.delete(UserSchema.TABLE_NAME,UserSchema.WHERE_ID_EQUAL,new String[]{String.valueOf(user.getId())});
         database.close();
     }
 
     @Override
-    public User searchById(long id) throws Exception {
+    public User searchById(long id)  {
         SQLiteDatabase database = helper.getReadableDatabase();
         Cursor cursor = database.rawQuery(UserSchema.SELECT_BY_ID, new String[]{String.valueOf(id)});
 
@@ -61,7 +60,7 @@ public class UserDAO implements SQLiteGenericDAO<User> {
     }
 
     @Override
-    public List<User> searchByName(String name) throws Exception {
+    public List<User> searchByName(String name) {
         List<User> users = new ArrayList<>();
         SQLiteDatabase database = helper.getReadableDatabase();
         Cursor cursor = database.rawQuery(UserSchema.SELECT_BY_NAME, new String[]{String.valueOf(name)});
@@ -78,7 +77,7 @@ public class UserDAO implements SQLiteGenericDAO<User> {
     }
 
     @Override
-    public List<User> searchAll() throws Exception {
+    public List<User> searchAll()  {
         List<User> users = new ArrayList<>();
         SQLiteDatabase database = helper.getReadableDatabase();
         Cursor cursor = database.rawQuery(UserSchema.SELECT_ALL,null);
@@ -99,7 +98,6 @@ public class UserDAO implements SQLiteGenericDAO<User> {
 
     private ContentValues getContentValues(User user) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(UserSchema.COLUMN_ID,user.getId());
         contentValues.put(UserSchema.COLUMN_NAME,user.getName());
         contentValues.put(UserSchema.COLUMN_DATE,user.getDate());
 

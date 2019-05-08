@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.example.agenda.R;
 import com.example.agenda.models.User;
+import com.example.agenda.utils.DatePickerDialogHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,14 +43,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder,final int i) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
         User user = userList.get(i);
         viewHolder.nameTextView.setText(user.getName());
         viewHolder.dateTextView.setText(user.getDate());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onEditItemClick(v,i);
+                listener.onEditItemClick(v,viewHolder.getAdapterPosition());
             }
         });
     }

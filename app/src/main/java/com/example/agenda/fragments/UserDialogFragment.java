@@ -16,6 +16,10 @@ import android.widget.Toast;
 
 import com.example.agenda.R;
 import com.example.agenda.models.User;
+import com.example.agenda.utils.DatePickerDialogHelper;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import butterknife.BindView;
 
@@ -25,12 +29,14 @@ public class UserDialogFragment extends DialogFragment {
         void onDialogPositiveClick(User user, int position);
     }
 
-    public static String EDIT_TAG = "EDIT";
-    public static String CREATE_TAG = "CREATE";
+    public static final String CREATE_TAG = "CREATE";
+    public static final String EDIT_TAG = "EDIT";
+
     private static final String EXTRA_TITLE = "TITLE";
     private static final String EXTRA_POSITIVE_BUTTON = "POSITIVE_BUTTON";
     private static final String EXTRA_ITEM = "SERIALIZABLE_ITEM";
     private static final String EXTRA_POSITION = "ITEM_POSITION";
+
     private NoticeDialogListener dialogListener;
     private User currentUser = null;
 
@@ -49,6 +55,10 @@ public class UserDialogFragment extends DialogFragment {
         dialogListener = (NoticeDialogListener) context;
     }
 
+    public static UserDialogFragment newInstance(String title, String positiveButton){
+        return newInstance(title,positiveButton,null,-1);
+    }
+
     public static UserDialogFragment newInstance(String title,String positiveButton,User user, int position){
         UserDialogFragment dialogFragment = new UserDialogFragment();
         Bundle bundle = new Bundle();
@@ -58,10 +68,6 @@ public class UserDialogFragment extends DialogFragment {
         bundle.putInt(EXTRA_POSITION, position);
         dialogFragment.setArguments(bundle);
         return dialogFragment;
-    }
-
-    public static UserDialogFragment newInstance(String title, String positiveButton){
-        return newInstance(title,positiveButton,null,-1);
     }
 
     @NonNull
@@ -75,7 +81,7 @@ public class UserDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(bundle.getString(EXTRA_TITLE));
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(bundle.getString(EXTRA_POSITIVE_BUTTON), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 currentUser.setName(nameEditText.getText().toString().trim());
@@ -93,6 +99,8 @@ public class UserDialogFragment extends DialogFragment {
         builder.setView(view);
 
         setView(view,bundle);
+
+        DatePickerDialogHelper.setDatePickerDialog(dateEditText,context,new SimpleDateFormat("dd/MM/yyyy"));
 
         return builder.create();
     }

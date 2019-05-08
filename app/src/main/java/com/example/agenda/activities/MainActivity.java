@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.agenda.R;
 import com.example.agenda.models.User;
@@ -21,7 +22,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements UserDialogFragment.NoticeDialogListener,
+public class MainActivity extends AppCompatActivity implements
+        UserDialogFragment.NoticeDialogListener,
         UserAdapter.UserAdapterListener {
 
     @BindView(R.id.recycler)
@@ -36,56 +38,68 @@ public class MainActivity extends AppCompatActivity implements UserDialogFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         setUsers();
         setRecycler();
     }
 
+    /**
+     * Configure RecyclerView
+     */
     private void setRecycler() {
         recyclerView.setLayoutManager( new LinearLayoutManager(this));
         adapter = new UserAdapter(users,this);
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Set the saved users to the list
+     */
     private void setUsers()  {
         userDAO = new UserDAO(this);
-        try{
-            users = userDAO.searchAll();
-        } catch(Exception e){
-            Log.v("USERLIST ERROR", e.getMessage());
-        }
+        users = userDAO.searchAll();
     }
 
+    /**
+     * Floating Action Button Click
+     */
     @OnClick(R.id.fab_add)
     public void OnClick(){
         showUserDialogFragment(UserDialogFragment.CREATE_TAG,-1);
     }
 
+    /**
+     * Listener for DialogFragment Creation
+     * @param user
+     * @param position
+     */
     @Override
     public void onDialogPositiveClick(User user, int position) {
-        if(user.getId() == 0) {
-            try {
-                userDAO.create(user);
-                users.add(user);
-                recyclerView.scrollToPosition(position);
-            } catch (Exception e) {
-                Log.v("CREATE USER ERROR", e.getMessage());
-            }
+        if(user.getId() < 0) {
+            userDAO.create(user);
+            users.add(user);
+            recyclerView.scrollToPosition(adapter.getItemCount());
         }else{
-            try{
-                userDAO.update(user);
-                users.set(position,user);
-            } catch(Exception e) { Log.v("UPDATE USER ERROR",e.getMessage()); }
-
+            userDAO.update(user);
+            users.set(position,user);
         }
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Listener for DialogFragment Edit
+     * @param v
+     * @param position
+     */
     @Override
     public void onEditItemClick(View v, int position) {
         showUserDialogFragment(UserDialogFragment.EDIT_TAG,position);
     }
 
+    /**
+     * Instance of DialogFragment
+     * @param tag
+     * @param position
+     */
     private void showUserDialogFragment(String tag, int position){
         FragmentManager fragmentManager = getSupportFragmentManager();
         UserDialogFragment dialogFragment;
@@ -93,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements UserDialogFragmen
             dialogFragment = UserDialogFragment.newInstance(UserDialogFragment.EDIT_TAG,"Atualizar",users.get(position),position);
         }else{
             dialogFragment = UserDialogFragment.newInstance(UserDialogFragment.CREATE_TAG,"Adicionar");
+            dialogFragment.setCancelable(false);
         }
         dialogFragment.show(fragmentManager,tag);
     }

@@ -1,5 +1,7 @@
 package com.example.agenda.activities;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -7,9 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.agenda.R;
 import com.example.agenda.models.User;
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements
      */
     @Override
     public void onDialogPositiveClick(User user, int position) {
-        if(user.getId() < 0) {
+        if(user.getId() == 0) {
             userDAO.create(user);
             users.add(user);
             recyclerView.scrollToPosition(adapter.getItemCount());
@@ -135,5 +137,38 @@ public class MainActivity extends AppCompatActivity implements
             dialogFragment.setCancelable(false);
         }
         dialogFragment.show(fragmentManager,tag);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search,menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search_button).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return true;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search(s);
+                return true;
+            }
+        });
+
+        return true;
+    }
+
+    private void search(String s) {
+        List<User> filteredUsers = new ArrayList<>();
+
+        for(User user : users){
+            if(user.getName().toLowerCase().contains(s.toLowerCase())) filteredUsers.add(user);
+        }
+
+        UserAdapter filteredAdapter = new UserAdapter(filteredUsers,this);
+        recyclerView.setAdapter(filteredAdapter);
     }
 }

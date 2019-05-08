@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.agenda.R;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private List<User> userList;
+    private UserAdapterListener listener;
     private Context context;
 
     public interface UserAdapterListener{
@@ -28,6 +30,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public UserAdapter(List<User> userList, Context context) {
         this.userList = userList;
         this.context = context;
+        listener = (UserAdapterListener) context;
     }
 
     @NonNull
@@ -38,10 +41,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder,final int i) {
         User user = userList.get(i);
         viewHolder.nameTextView.setText(user.getName());
         viewHolder.dateTextView.setText(user.getDate());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onEditItemClick(v,i);
+            }
+        });
     }
 
     @Override

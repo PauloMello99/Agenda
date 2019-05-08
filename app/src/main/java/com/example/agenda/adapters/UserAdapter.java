@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.agenda.R;
 import com.example.agenda.models.User;
@@ -27,6 +28,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     public interface UserAdapterListener{
         void onEditItemClick(View v, int position);
+        void onRemoveItemLongClick(View v, int position);
     }
 
     public UserAdapter(List<User> userList, Context context) {
@@ -51,6 +53,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 listener.onEditItemClick(v,viewHolder.getAdapterPosition());
+            }
+        });
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listener.onRemoveItemLongClick(v,viewHolder.getAdapterPosition());
+                return true;
             }
         });
     }

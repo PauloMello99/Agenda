@@ -1,6 +1,8 @@
 package com.example.agenda.activities;
 
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -93,6 +95,29 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onEditItemClick(View v, int position) {
         showUserDialogFragment(UserDialogFragment.EDIT_TAG,position);
+    }
+
+    @Override
+    public void onRemoveItemLongClick(View v, int position) {
+        showDeleteDialog(v,position);
+    }
+
+    private void showDeleteDialog(View v, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmação");
+        builder.setMessage("Tem certeza que deseja excluir esse usuário?");
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                userDAO.delete(users.get(position));
+                users.remove(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyDataSetChanged();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel,null);
+        builder.create();
+        builder.show();
     }
 
     /**

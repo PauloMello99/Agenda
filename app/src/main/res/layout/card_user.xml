@@ -18,23 +18,32 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:text="@string/app_name"
-                android:layout_weight=".3"
-                style="@style/TextAppearance.AppCompat.Title"
-                android:gravity="center"
-                android:id="@+id/card_name"/>
+                android:layout_weight="0.3"
+                android:layout_gravity="center"
+                android:weightSum="1">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/app_name"
-                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                android:layout_weight=".7"
-                android:gravity="center"
-                android:id="@+id/card_year"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/app_name"
+                    android:layout_weight=".3"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:gravity="center"
+                    android:id="@+id/card_name"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/app_name"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                    android:layout_weight=".7"
+                    android:gravity="center"
+                    android:id="@+id/card_year"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

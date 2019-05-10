@@ -1,5 +1,7 @@
 package com.example.agenda.models;
 
+import android.support.annotation.Nullable;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -15,7 +17,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(long id, String name, String date, String phone, String address, String url, String photoUri) {
+    public User(long id, String name, String date, String phone, String address, String url,@Nullable String photoUri) {
         this.id = id;
         this.name = name;
         this.date = date;

@@ -82,10 +82,8 @@ public class ProfileActivity extends AppCompatActivity {
         user.setAddress(addressEditText.getText().toString());
         user.setPhone(phoneEditText.getText().toString());
         user.setDate(dateEditText.getText().toString());
-
-        // TODO CREATE WITHOUT PHOTO
-        if(file.getPath()!=null) user.setPhotoUri(file.getPath());
-        else user.setPhotoUri("null.jpg");
+        if(file != null) user.setPhotoUri(file.getPath());
+        else user.setPhotoUri(null);
 
         if(checkFields()){
             Intent returnIntent = new Intent();
@@ -117,6 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
             urlEditText.setText(user.getUrl());
 
             if(user.getPhotoUri() != null){
+                file = Uri.parse(user.getPhotoUri());
                 Bitmap bitmap = BitmapFactory.decodeFile(user.getPhotoUri());
                 Bitmap redux = Bitmap.createScaledBitmap(bitmap,300,300,true);
                 photoImageView.setImageBitmap(redux);

@@ -20,7 +20,7 @@ public class UserSchema {
             + COLUMN_PHONE + " TEXT NOT NULL, "
             + COLUMN_ADDRESS + " TEXT NOT NULL, "
             + COLUMN_URL + " TEXT NOT NULL, "
-            + COLUMN_PHOTO_URI + " TEXT NOT NULL "
+            + COLUMN_PHOTO_URI + " TEXT"
             +");";
 
     static final String WHERE_ID_EQUAL = COLUMN_ID + " = ? ";

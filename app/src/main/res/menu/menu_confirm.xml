@@ -4,9 +4,8 @@
 
     <item
         android:id="@+id/search_button"
-        android:icon="@drawable/ic_search_black_24dp"
-        app:actionViewClass="android.support.v7.widget.SearchView"
+        android:icon="@drawable/ic_check_black_24dp"
         app:showAsAction="always"
-        android:title="@string/search" />
+        android:title="@string/confirm" />
 
-    </menu>
+</menu>

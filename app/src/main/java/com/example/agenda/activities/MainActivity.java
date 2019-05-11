@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity{
         setUsers();
         setRecycler();
         registerForContextMenu(recyclerView);
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.RECEIVE_SMS},124);
+        }
     }
 
     /**
@@ -79,6 +82,11 @@ public class MainActivity extends AppCompatActivity{
         startActivityForResult(intentProfile,555);
     }
 
+    /**
+     * Context Menu
+     * @param item
+     * @return
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         int userId = item.getGroupId();
@@ -149,6 +157,10 @@ public class MainActivity extends AppCompatActivity{
         return true;
     }
 
+    /**
+     * Confirm the user delete
+     * @param position
+     */
     private void showDeleteDialog(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.confirmation));
@@ -167,6 +179,11 @@ public class MainActivity extends AppCompatActivity{
         builder.show();
     }
 
+    /**
+     * Search View inflate and query
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search,menu);
@@ -189,6 +206,10 @@ public class MainActivity extends AppCompatActivity{
         return true;
     }
 
+    /**
+     * Search user
+     * @param s
+     */
     private void search(String s) {
         List<User> filteredUsers = new ArrayList<>();
         for(User user : users){
@@ -198,6 +219,12 @@ public class MainActivity extends AppCompatActivity{
         recyclerView.setAdapter(filteredAdapter);
     }
 
+    /**
+     * Result of others activities
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK && requestCode == 555){

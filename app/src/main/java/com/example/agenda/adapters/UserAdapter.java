@@ -8,19 +8,14 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.agenda.R;
 import com.example.agenda.models.User;
-import com.example.agenda.utils.DatePickerDialogHelper;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;

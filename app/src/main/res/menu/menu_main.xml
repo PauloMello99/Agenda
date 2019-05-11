@@ -13,6 +13,12 @@
         android:id="@+id/item_send"
         android:icon="@drawable/ic_cloud_upload_black_24dp"
         app:showAsAction="ifRoom"
-        android:title="@string/confirm" />
+        android:title="@string/upload_users" />
+
+    <item
+        android:id="@+id/item_receive"
+        android:icon="@drawable/ic_cloud_download_black_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/download_tests" />
 
     </menu>

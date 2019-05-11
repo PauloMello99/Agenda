@@ -4,11 +4,10 @@ import java.util.List;
 
 public interface SQLiteGenericDAO<T> {
 
-    long create(T t) throws  Exception;
-    void update(T t) throws  Exception;
-    void delete(T t) throws  Exception;
-    T searchById(long id) throws  Exception;
-    List<T> searchByName(String name) throws  Exception;
-    List<T> searchAll() throws  Exception;
-
+    long create(T t);
+    void update(T t);
+    void delete(T t);
+    T searchById(long id);
+    List<T> searchByName(String name);
+    List<T> searchAll();
 }

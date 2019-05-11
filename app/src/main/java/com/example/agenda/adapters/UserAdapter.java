@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
@@ -44,6 +45,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         String[] name = user.getName().trim().split(" ");
         viewHolder.nameTextView.setText(name[0]);
         viewHolder.phoneTextView.setText(user.getPhone());
+        if(viewHolder.addressTextView != null)viewHolder.addressTextView.setText(user.getAddress());
+        if(viewHolder.urlTextView != null)viewHolder.urlTextView.setText(user.getUrl());
+
         if(user.getPhotoUri() != null){
             Bitmap bitmap = BitmapFactory.decodeFile(user.getPhotoUri());
             Bitmap redux = Bitmap.createScaledBitmap(bitmap,300,300,true);
@@ -68,6 +72,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         @BindView(R.id.card_image)
         ImageView imageView;
+
+        @Nullable
+        @BindView(R.id.card_address)
+        TextView addressTextView;
+
+        @Nullable
+        @BindView(R.id.card_url)
+        TextView urlTextView;
 
         @BindView(R.id.card_view)
         CardView cardView;

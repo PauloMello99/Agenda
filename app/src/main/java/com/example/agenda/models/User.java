@@ -8,7 +8,7 @@ public class User implements Serializable {
 
     private long id;
     private String name;
-    private String date;
+    private double score;
     private String phone;
     private String address;
     private String url;
@@ -17,10 +17,10 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(long id, String name, String date, String phone, String address, String url,@Nullable String photoUri) {
+    public User(long id, String name, double score, String phone, String address, String url,@Nullable String photoUri) {
         this.id = id;
         this.name = name;
-        this.date = date;
+        this.score = score;
         this.phone = phone;
         this.address = address;
         this.url = url;
@@ -43,12 +43,12 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public String getDate() {
-        return date;
+    public double getScore() {
+        return score;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public String getPhone() {

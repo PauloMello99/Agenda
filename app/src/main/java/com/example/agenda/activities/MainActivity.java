@@ -23,6 +23,7 @@ import com.example.agenda.R;
 import com.example.agenda.models.User;
 import com.example.agenda.adapters.UserAdapter;
 import com.example.agenda.providers.UserDAO;
+import com.example.agenda.utils.SendUserTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,10 +187,10 @@ public class MainActivity extends AppCompatActivity{
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search,menu);
+        getMenuInflater().inflate(R.menu.menu_main,menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search_button).getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.item_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -202,13 +203,25 @@ public class MainActivity extends AppCompatActivity{
                 return true;
             }
         });
-
         return true;
     }
 
     /**
-     * Search user
-     * @param s
+     * Menu Options
+     * @param item
+     * @return
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.item_send) {
+            new SendUserTask(this).execute();
+        }
+        return true;
+    }
+
+    /**
+     * Search user by name
+     * @param s query string
      */
     private void search(String s) {
         List<User> filteredUsers = new ArrayList<>();

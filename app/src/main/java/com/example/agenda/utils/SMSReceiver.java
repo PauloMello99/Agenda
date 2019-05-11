@@ -20,8 +20,6 @@ public class SMSReceiver extends BroadcastReceiver {
         SmsMessage sms = SmsMessage.createFromPdu(pdu,formato);
         String telefone = sms.getDisplayOriginatingAddress();
         UserDAO userDAO = new UserDAO(context);
-        if(userDAO.isUser(telefone)){
-            Toast.makeText(context, "Usuário mandou mensagem!", Toast.LENGTH_LONG).show();
-        }
+        if(userDAO.isUser(telefone))Toast.makeText(context, "Usuário mandou mensagem!", Toast.LENGTH_LONG).show();
     }
 }

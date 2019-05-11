@@ -30,4 +30,6 @@
     <string name="insert_phone">Insira o telefone</string>
     <string name="insert_address">Insira o endereço</string>
     <string name="insert_url">Insira a URL</string>
+    <string name="score">Nota</string>
+    <string name="insert_score">Insira a nota</string>
 </resources>

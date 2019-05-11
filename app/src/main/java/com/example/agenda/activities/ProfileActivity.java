@@ -12,24 +12,19 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.agenda.R;
 import com.example.agenda.models.User;
-import com.example.agenda.utils.DatePickerDialogHelper;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,8 +40,8 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.name)
     EditText nameEditText;
 
-    @BindView(R.id.date)
-    EditText dateEditText;
+    @BindView(R.id.score)
+    EditText scoreEditText;
 
     @BindView(R.id.phone)
     EditText phoneEditText;
@@ -60,8 +55,8 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.input_layout_name)
     TextInputLayout nameInputLayout;
 
-    @BindView(R.id.input_layout_date)
-    TextInputLayout dateInputLayout;
+    @BindView(R.id.input_layout_score)
+    TextInputLayout scoreInputLayout;
 
     @BindView(R.id.input_layout_phone)
     TextInputLayout phoneInputLayout;
@@ -77,15 +72,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.confirm_button)
     public void confirmButton(){
-        user.setUrl(urlEditText.getText().toString());
-        user.setName(nameEditText.getText().toString());
-        user.setAddress(addressEditText.getText().toString());
-        user.setPhone(phoneEditText.getText().toString());
-        user.setDate(dateEditText.getText().toString());
-        if(file != null) user.setPhotoUri(file.getPath());
-        else user.setPhotoUri(null);
-
         if(checkFields()){
+            user.setUrl(urlEditText.getText().toString());
+            user.setName(nameEditText.getText().toString());
+            user.setAddress(addressEditText.getText().toString());
+            user.setPhone(phoneEditText.getText().toString());
+            user.setScore(Double.parseDouble(scoreEditText.getText().toString().trim()));
+            if(file != null) user.setPhotoUri(file.getPath());
+            else user.setPhotoUri(null);
             Intent returnIntent = new Intent();
             returnIntent.putExtra("EDITUSER",user);
             returnIntent.putExtra("POSITION",position);
@@ -109,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         if(tag.equals("EDIT")){
             nameEditText.setText(user.getName());
-            dateEditText.setText(user.getDate());
+            scoreEditText.setText(String.valueOf(user.getScore()));
             phoneEditText.setText(user.getPhone());
             addressEditText.setText(user.getAddress());
             urlEditText.setText(user.getUrl());
@@ -121,7 +115,6 @@ public class ProfileActivity extends AppCompatActivity {
                 photoImageView.setImageBitmap(redux);
             }
         } else user = new User();
-        DatePickerDialogHelper.setDatePickerDialog(dateEditText,this,new SimpleDateFormat("dd/MM/yyyy"));
     }
 
     private boolean checkFields() {
@@ -130,8 +123,8 @@ public class ProfileActivity extends AppCompatActivity {
             nameInputLayout.setError(getString(R.string.insert_name));
             check = false;
         }
-        if(TextUtils.isEmpty(dateEditText.getText())){
-            dateInputLayout.setError(getString(R.string.insert_date));
+        if(TextUtils.isEmpty(scoreEditText.getText())){
+            scoreInputLayout.setError(getString(R.string.insert_score));
             check = false;
         }
         if(TextUtils.isEmpty(phoneEditText.getText())){

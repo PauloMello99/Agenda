@@ -101,13 +101,13 @@ public class UserDAO implements SQLiteGenericDAO<User> {
     }
 
     private User getUserFromCursor(Cursor cursor){
-        return new User(Long.parseLong(cursor.getString(0)),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
+        return new User(Long.parseLong(cursor.getString(0)),cursor.getString(1),cursor.getDouble(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6));
     }
 
     private ContentValues getContentValues(User user) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(UserSchema.COLUMN_NAME,user.getName());
-        contentValues.put(UserSchema.COLUMN_DATE,user.getDate());
+        contentValues.put(UserSchema.COLUMN_SCORE,user.getScore());
         contentValues.put(UserSchema.COLUMN_PHONE,user.getPhone());
         contentValues.put(UserSchema.COLUMN_ADDRESS,user.getAddress());
         contentValues.put(UserSchema.COLUMN_URL,user.getUrl());

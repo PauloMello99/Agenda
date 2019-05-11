@@ -9,7 +9,7 @@ import android.util.Log;
 public class AgendaSQLHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "BancaDB";
-    private static final int DATABASE_VERSION = 17;
+    private static final int DATABASE_VERSION = 18;
     private Context context;
 
     public AgendaSQLHelper(Context context){

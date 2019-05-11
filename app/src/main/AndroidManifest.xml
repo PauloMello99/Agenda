@@ -18,7 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.TestActivity"></activity>
+        <activity android:name=".activities.TestDetailsActivity"/>
+        <activity android:name=".activities.TestListActivity" />
+
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"

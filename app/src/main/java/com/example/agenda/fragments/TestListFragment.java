@@ -1,17 +1,19 @@
-package com.example.agenda.activities;
+package com.example.agenda.fragments;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
 import com.example.agenda.R;
+import com.example.agenda.activities.TestListActivity;
 import com.example.agenda.adapters.TestAdapter;
-import com.example.agenda.adapters.UserAdapter;
 import com.example.agenda.models.Test;
-import com.example.agenda.providers.TestDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,26 +21,20 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TestActivity extends AppCompatActivity implements TestAdapter.AdapterClickListener {
+public class TestListFragment extends Fragment implements TestAdapter.AdapterClickListener {
 
     private List<Test> tests;
     private TestAdapter adapter;
-    private TestDAO testDAO;
 
     @BindView(R.id.recycler_tests)
     RecyclerView recyclerView;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
-        ButterKnife.bind(this);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_test_list,container,false);
+        ButterKnife.bind(this,view);
 
-        setTests();
-        setRecycler();
-    }
-
-    private void setTests() {
         tests = new ArrayList<>();
 
         List<String> topics = new ArrayList<>();
@@ -50,18 +46,25 @@ public class TestActivity extends AppCompatActivity implements TestAdapter.Adapt
         topicsMath.add("Equações de Segundo Grau");
         topicsMath.add("Trigonometria");
         Test math = new Test(1,"Matemática","21/01/1999",topicsMath);
+
+        tests.add(pt);
         tests.add(pt);
         tests.add(math);
+
+        setRecycler();
+
+        return view;
     }
 
     private void setRecycler() {
-        recyclerView.setLayoutManager( new LinearLayoutManager(this));
-        adapter = new TestAdapter(tests,this,this);
+        recyclerView.setLayoutManager( new LinearLayoutManager(getContext()));
+        adapter = new TestAdapter(tests,getContext(),this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onTestItemClicked(View v, int position) {
-        Toast.makeText(this, tests.get(position).toString(), Toast.LENGTH_SHORT).show();
+        TestListActivity activity = (TestListActivity) getActivity();
+        activity.setTest(tests.get(position));
     }
 }

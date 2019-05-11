@@ -43,8 +43,6 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Test test = testList.get(i);
         viewHolder.subjectTextView.setText(test.getSubject());
-        viewHolder.dateTextView.setText(test.getDate());
-        viewHolder.topicsTextView.setText(test.getTopics().toString());
     }
 
     @Override
@@ -56,12 +54,6 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder> {
 
         @BindView(R.id.card_subject)
         TextView subjectTextView;
-
-        @BindView(R.id.card_date)
-        TextView dateTextView;
-
-        @BindView(R.id.card_topics)
-        TextView topicsTextView;
 
         private ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity{
         if(item.getItemId() == R.id.item_send) {
             new SendUserTask(this).execute();
         }else if(item.getItemId() == R.id.item_receive){
-            Intent intentTest = new Intent(MainActivity.this,TestActivity.class);
+            Intent intentTest = new Intent(MainActivity.this, TestListActivity.class);
             startActivityForResult(intentTest,125);
         }
         return true;

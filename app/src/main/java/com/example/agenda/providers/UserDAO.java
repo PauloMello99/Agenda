@@ -63,7 +63,7 @@ public class UserDAO implements SQLiteGenericDAO<User> {
     public List<User> searchByName(String name) {
         List<User> users = new ArrayList<>();
         SQLiteDatabase database = helper.getReadableDatabase();
-        Cursor cursor = database.rawQuery(UserSchema.SELECT_BY_NAME, new String[]{String.valueOf(name)});
+        Cursor cursor = database.rawQuery(UserSchema.SELECT_BY_NAME, new String[]{name});
         if (cursor.moveToFirst()) {
             do {
                 User user = getUserFromCursor(cursor);
@@ -89,6 +89,15 @@ public class UserDAO implements SQLiteGenericDAO<User> {
         cursor.close();
         database.close();
         return users;
+    }
+
+    public boolean isUser(String phone){
+        SQLiteDatabase database = helper.getReadableDatabase();
+        Cursor cursor = database.rawQuery(UserSchema.SELECT_BY_PHONE,new String[]{phone});
+        int count = cursor.getCount();
+        cursor.close();
+        database.close();
+        return count>0;
     }
 
     private User getUserFromCursor(Cursor cursor){

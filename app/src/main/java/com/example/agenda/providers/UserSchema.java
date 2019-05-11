@@ -25,8 +25,10 @@ public class UserSchema {
 
     static final String WHERE_ID_EQUAL = COLUMN_ID + " = ? ";
     static final String WHERE_NAME_EQUAL = COLUMN_NAME + " = ? ";
+    static final String WHERE_PHONE_EQUAL = COLUMN_PHONE + " = ? ";
     static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     static final String SELECT_ALL = "SELECT * FROM " + TABLE_NAME;
     static final String SELECT_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE " + WHERE_ID_EQUAL;
     static final String SELECT_BY_NAME = "SELECT * FROM " + TABLE_NAME + " WHERE " + WHERE_NAME_EQUAL;
+    static final String SELECT_BY_PHONE = "SELECT * FROM " + TABLE_NAME + " WHERE " + WHERE_PHONE_EQUAL;
 }

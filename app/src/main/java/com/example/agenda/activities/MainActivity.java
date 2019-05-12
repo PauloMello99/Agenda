@@ -218,6 +218,9 @@ public class MainActivity extends AppCompatActivity{
         }else if(item.getItemId() == R.id.item_receive){
             Intent intentTest = new Intent(MainActivity.this, TestListActivity.class);
             startActivityForResult(intentTest,125);
+        } else if(item.getItemId() == R.id.item_maps){
+            Intent intentMaps = new Intent(MainActivity.this,MapsActivity.class);
+            startActivity(intentMaps);
         }
         return true;
     }
